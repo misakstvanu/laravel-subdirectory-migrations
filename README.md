@@ -35,7 +35,7 @@ All migration commands (`migrate`, `migrate:rollback`, `migrate:status`, `migrat
 
 ## How it works
 
-The package replaces Laravel's default `Migrator` with a thin subclass (`SubdirectoryMigrator`) that overrides `getMigrationFiles()`. Before delegating to the original implementation, it recursively expands every registered migration path to include all of its subdirectories. No configuration required.
+During the `boot` phase, `SubdirectoryMigrationsServiceProvider` recursively walks `database/migrations` with `RecursiveDirectoryIterator` and calls `loadMigrationsFrom()` for every subdirectory found. Laravel's built-in migration commands then discover all those paths automatically. No configuration required.
 
 ## License
 

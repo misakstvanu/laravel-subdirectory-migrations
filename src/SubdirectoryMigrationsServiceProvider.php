@@ -3,21 +3,31 @@
 namespace Misakstvanu\SubdirectoryMigrations;
 
 use Illuminate\Support\ServiceProvider;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 class SubdirectoryMigrationsServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Bootstrap any application services.
      */
-    public function register(): void
+    public function boot(): void
     {
-        $this->app->extend('migrator', function ($migrator, $app) {
-            return new SubdirectoryMigrator(
-                $app['migration.repository'],
-                $app['db'],
-                $app['files'],
-                $app['events']
-            );
-        });
+        $basePath = database_path('migrations');
+
+        if (! is_dir($basePath)) {
+            return;
+        }
+
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($basePath, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
+
+        foreach ($iterator as $file) {
+            if ($file->isDir()) {
+                $this->loadMigrationsFrom($file->getPathname());
+            }
+        }
     }
 }
