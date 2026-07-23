@@ -1,0 +1,44 @@
+{
+    "name": "misakstvanu/laravel-subdirectory-migrations",
+    "description": "Automatically include all subdirectories in Laravel migration discovery",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "migrations",
+        "subdirectory"
+    ],
+    "authors": [
+        {
+            "name": "misakstvanu"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "illuminate/database": "^9.0|^10.0|^11.0|^12.0",
+        "illuminate/support": "^9.0|^10.0|^11.0|^12.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.0|^8.0|^9.0|^10.0",
+        "phpunit/phpunit": "^9.0|^10.0|^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Misakstvanu\\SubdirectoryMigrations\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Misakstvanu\\SubdirectoryMigrations\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Misakstvanu\\SubdirectoryMigrations\\SubdirectoryMigrationsServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
